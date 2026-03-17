@@ -3,240 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>VIP PREMIUM • SECURE FILE SHARE</title>
+    <title>VIP PREMIUM • DIRECT ACCESS</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
 
         :root {
-            --primary: #00ffff;
-            --primary-dark: #00cccc;
-            --secondary: #ff00ff;
+            --neon: #00ffff;
             --vip: #ffd700;
             --dark: #0a0a0f;
-            --darker: #050508;
             --glass: rgba(10, 10, 20, 0.95);
-            --glass-light: rgba(20, 20, 40, 0.8);
         }
 
         body {
-            background: var(--darker);
+            background: var(--dark);
             color: white;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        /* Premium Background */
-        .premium-bg {
+        /* Animated Background */
+        .bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: -2;
+            z-index: -1;
+            background: linear-gradient(45deg, #000, #0a0a1a);
         }
 
-        .gradient-bg {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 50%, rgba(0, 255, 255, 0.1) 0%, transparent 50%),
-                        radial-gradient(circle at 70% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 50%),
-                        linear-gradient(135deg, var(--darker) 0%, #0a0a1a 100%);
-        }
-
-        .grid-overlay {
+        .grid {
             position: absolute;
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+                linear-gradient(rgba(0,255,255,0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0,255,255,0.1) 1px, transparent 1px);
             background-size: 40px 40px;
-            animation: gridMove 20s linear infinite;
+            animation: grid 20s linear infinite;
         }
 
-        @keyframes gridMove {
+        @keyframes grid {
             0% { transform: translateY(0); }
             100% { transform: translateY(40px); }
         }
 
-        .floating-elements {
+        .floating {
             position: absolute;
             width: 100%;
             height: 100%;
         }
 
-        .float-element {
+        .floating div {
             position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.15;
+            width: 200px;
+            height: 200px;
+            filter: blur(60px);
+            opacity: 0.2;
             animation: float 15s infinite;
         }
 
-        .element1 {
+        .floating div:nth-child(1) {
             top: 10%;
             left: 10%;
-            background: var(--primary);
+            background: var(--neon);
             animation-delay: 0s;
         }
 
-        .element2 {
+        .floating div:nth-child(2) {
             bottom: 20%;
             right: 10%;
-            background: var(--secondary);
+            background: var(--vip);
             animation-delay: -5s;
         }
 
-        .element3 {
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: var(--vip);
-            animation-delay: -10s;
-        }
-
         @keyframes float {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -30px) scale(1.1); }
-            66% { transform: translate(-30px, 30px) scale(0.9); }
+            0%,100%{ transform: translate(0,0); }
+            50%{ transform: translate(30px, -30px); }
         }
 
-        /* Main Container */
+        /* Container */
         .container {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 15px;
             position: relative;
-            z-index: 10;
         }
 
-        /* VIP Header */
-        .vip-header {
+        /* Header */
+        .header {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            border: 2px solid var(--neon);
             border-radius: 30px;
             padding: 30px 20px;
-            margin: 20px 0 30px;
+            margin: 20px 0;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.2);
-        }
-
-        .vip-header::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                45deg,
-                transparent 30%,
-                rgba(0, 255, 255, 0.1) 50%,
-                transparent 70%
-            );
-            animation: shine 3s infinite;
-        }
-
-        @keyframes shine {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            box-shadow: 0 0 50px rgba(0,255,255,0.3);
         }
 
         .vip-badge {
             display: inline-block;
-            background: linear-gradient(45deg, var(--vip), #ffaa00);
-            color: #000;
-            padding: 8px 25px;
+            background: var(--vip);
+            color: black;
+            padding: 8px 30px;
             border-radius: 50px;
             font-weight: bold;
-            font-size: 1.2em;
+            font-size: 1.3em;
             margin-bottom: 15px;
             box-shadow: 0 0 30px var(--vip);
         }
 
-        .vip-header h1 {
-            font-size: clamp(2em, 8vw, 3.5em);
-            background: linear-gradient(135deg, #fff, var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 10px;
-        }
-
-        .vip-header p {
-            color: #aaa;
-            font-size: 1.1em;
+        .header h1 {
+            font-size: clamp(2em, 7vw, 3.5em);
+            color: var(--neon);
+            text-shadow: 0 0 20px var(--neon);
         }
 
         /* Panels */
         .panel {
             background: var(--glass);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(0,255,255,0.3);
             border-radius: 30px;
-            padding: 25px;
+            padding: 30px 20px;
             margin-bottom: 20px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
             display: none;
-            animation: panelFade 0.5s ease;
+            animation: slide 0.5s ease;
         }
 
-        @keyframes panelFade {
+        @keyframes slide {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .active-panel {
+        .active {
             display: block;
         }
 
-        .panel-title {
-            font-size: 1.8em;
+        .title {
+            font-size: 2em;
             text-align: center;
             margin-bottom: 25px;
-            background: linear-gradient(135deg, var(--primary), #fff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: var(--neon);
+            text-shadow: 0 0 15px var(--neon);
         }
 
-        /* Form Elements */
+        /* Forms */
         .input-group {
             margin-bottom: 20px;
         }
 
-        .input-label {
+        label {
             display: block;
             margin-bottom: 8px;
             color: #aaa;
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
-        .input-field {
+        input, textarea, select {
             width: 100%;
-            padding: 15px 20px;
-            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            background: rgba(0,0,0,0.5);
             border: 2px solid #333;
             border-radius: 15px;
             color: white;
             font-size: 16px;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
 
-        .input-field:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--neon);
+            box-shadow: 0 0 20px rgba(0,255,255,0.3);
             outline: none;
         }
 
@@ -249,26 +191,24 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: all 0.3s;
-            position: relative;
-            overflow: hidden;
+            transition: 0.3s;
             margin-bottom: 10px;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: #000;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            background: var(--neon);
+            color: black;
+            box-shadow: 0 0 30px var(--neon);
         }
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.8);
+            box-shadow: 0 0 40px var(--neon);
         }
 
         .btn-vip {
-            background: linear-gradient(135deg, var(--vip), #ffaa00);
-            color: #000;
+            background: var(--vip);
+            color: black;
             box-shadow: 0 0 30px var(--vip);
         }
 
@@ -278,28 +218,12 @@
         }
 
         .btn-danger {
-            background: linear-gradient(135deg, #ff4444, #cc0000);
+            background: #ff4444;
             color: white;
-        }
-
-        .btn-tab {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid #333;
-            color: white;
-        }
-
-        .btn-tab:hover {
-            border-color: var(--primary);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
-        }
-
-        .btn-tab.active {
-            border-color: var(--primary);
-            background: rgba(0, 255, 255, 0.1);
         }
 
         /* Tabs */
-        .tab-container {
+        .tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 25px;
@@ -310,28 +234,23 @@
             flex: 1;
             min-width: 120px;
             padding: 12px;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255,255,255,0.05);
             border: 1px solid #333;
             border-radius: 12px;
             color: white;
             cursor: pointer;
-            transition: all 0.3s;
             text-align: center;
+            transition: 0.3s;
         }
 
-        .tab:hover {
-            border-color: var(--primary);
-        }
-
-        .tab.active {
-            border-color: var(--primary);
-            background: rgba(0, 255, 255, 0.1);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.2);
+        .tab:hover, .tab.active {
+            border-color: var(--neon);
+            background: rgba(0,255,255,0.1);
         }
 
         /* Cards */
-        .user-card, .link-card {
-            background: rgba(0, 0, 0, 0.3);
+        .card {
+            background: rgba(0,0,0,0.3);
             border: 1px solid #333;
             border-radius: 15px;
             padding: 15px;
@@ -339,37 +258,21 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            transition: all 0.3s;
+            transition: 0.3s;
         }
 
-        .user-card:hover, .link-card:hover {
-            border-color: var(--primary);
+        .card:hover {
+            border-color: var(--neon);
             transform: translateX(5px);
         }
 
-        .user-info h4 {
-            color: var(--primary);
+        .card h4 {
+            color: var(--neon);
             margin-bottom: 5px;
         }
 
-        .user-info p {
-            color: #aaa;
-            font-size: 0.9em;
-        }
-
-        .link-info {
-            flex: 1;
-        }
-
-        .link-info h4 {
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .link-url {
+        .card small {
             color: #666;
-            font-size: 0.8em;
-            word-break: break-all;
         }
 
         .card-actions {
@@ -384,59 +287,46 @@
             background: transparent;
             color: white;
             cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9em;
+            transition: 0.3s;
         }
 
         .card-btn:hover {
-            border-color: var(--primary);
-            background: rgba(0, 255, 255, 0.1);
-        }
-
-        .card-btn-danger:hover {
-            border-color: #ff4444;
-            background: rgba(255, 68, 68, 0.1);
+            border-color: var(--neon);
+            background: rgba(0,255,255,0.1);
         }
 
         /* Stats */
-        .stats-grid {
+        .stats {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(3, 1fr);
             gap: 15px;
             margin-bottom: 25px;
         }
 
-        .stat-box {
-            background: rgba(0, 0, 0, 0.3);
+        .stat {
+            background: rgba(0,0,0,0.3);
             border: 1px solid #333;
             border-radius: 15px;
-            padding: 20px;
+            padding: 15px;
             text-align: center;
         }
 
-        .stat-number {
+        .stat h3 {
             font-size: 2em;
-            color: var(--primary);
-            font-weight: bold;
+            color: var(--neon);
         }
 
-        .stat-label {
-            color: #aaa;
-            margin-top: 5px;
-        }
-
-        /* Video Container */
-        .video-container {
+        /* Video */
+        .video-box {
             margin: 20px 0;
-            background: #000;
+            background: black;
             border-radius: 20px;
             overflow: hidden;
-            border: 2px solid var(--primary);
+            border: 2px solid var(--neon);
         }
 
-        .video-container iframe {
+        .video-box iframe {
             width: 100%;
-            height: 100%;
             display: block;
         }
 
@@ -445,19 +335,19 @@
         .size-instagram { aspect-ratio: 1/1; max-width: 400px; margin: 0 auto; }
         .size-facebook { aspect-ratio: 4/3; }
 
-        /* Generated Link */
-        .generated-link {
+        /* Link Display */
+        .link-display {
             margin-top: 20px;
             padding: 15px;
-            background: rgba(0, 255, 255, 0.1);
-            border: 2px solid var(--primary);
+            background: rgba(0,255,255,0.1);
+            border: 2px solid var(--neon);
             border-radius: 15px;
             word-break: break-all;
             text-align: center;
         }
 
-        .generated-link a {
-            color: var(--primary);
+        .link-display a {
+            color: var(--neon);
             text-decoration: none;
             font-weight: bold;
         }
@@ -466,146 +356,102 @@
         .alert {
             position: fixed;
             top: 20px;
-            right: 20px;
-            left: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-            padding: 15px 20px;
-            border-radius: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            border-radius: 50px;
             background: var(--glass);
-            backdrop-filter: blur(10px);
             border: 2px solid;
             color: white;
             z-index: 1000;
-            animation: slideIn 0.3s ease;
+            animation: alert 0.3s ease;
         }
 
         .alert-success { border-color: #00ff00; }
         .alert-error { border-color: #ff4444; }
 
-        @keyframes slideIn {
-            from { transform: translateY(-100px); opacity: 0; }
-            to { transform: translateY(0); opacity: 1; }
+        @keyframes alert {
+            from { top: -100px; }
+            to { top: 20px; }
         }
 
-        /* Loading */
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(0, 255, 255, 0.1);
-            border-top-color: var(--primary);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin { to { transform: rotate(360deg); } }
-
-        /* Mobile Optimizations */
+        /* Mobile */
         @media (max-width: 768px) {
-            .container { padding: 10px; }
-            
-            .vip-header { padding: 20px 15px; }
-            
-            .tab { min-width: 100%; }
-            
-            .user-card, .link-card {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            
-            .card-actions {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .btn { padding: 14px; }
+            .tabs { flex-direction: column; }
+            .stats { grid-template-columns: 1fr; }
+            .card { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
 <body>
-    <div class="premium-bg">
-        <div class="gradient-bg"></div>
-        <div class="grid-overlay"></div>
-        <div class="floating-elements">
-            <div class="float-element element1"></div>
-            <div class="float-element element2"></div>
-            <div class="float-element element3"></div>
+    <div class="bg">
+        <div class="grid"></div>
+        <div class="floating">
+            <div></div>
+            <div></div>
         </div>
     </div>
 
     <div class="container">
-        <!-- VIP Header -->
-        <div class="vip-header">
-            <div class="vip-badge">★ PREMIUM VIP ★</div>
+        <!-- Header -->
+        <div class="header">
+            <div class="vip-badge">★ VIP ACCESS ★</div>
             <h1>SECURE FILE SHARE</h1>
-            <p>Advanced Cyber Security System • 100% Working</p>
+            <p style="color: #aaa; margin-top: 10px;">No Login Required • Direct Access</p>
         </div>
 
         <!-- Admin Login Panel -->
-        <div id="adminLoginPanel" class="panel active-panel">
-            <h2 class="panel-title">ADMIN LOGIN</h2>
+        <div id="adminLogin" class="panel active">
+            <h2 class="title">ADMIN LOGIN</h2>
             <div class="input-group">
-                <label class="input-label">Admin Password</label>
-                <input type="password" id="adminPass" class="input-field" placeholder="Enter admin password...">
+                <label>Admin Password</label>
+                <input type="password" id="adminPass" placeholder="Enter password...">
             </div>
-            <button class="btn btn-primary" onclick="loginAdmin()">Login to Dashboard</button>
-            <p style="text-align: center; margin-top: 15px; color: #666;">Default Password: admin123</p>
+            <button class="btn btn-primary" onclick="login()">LOGIN</button>
+            <p style="text-align: center; margin-top: 15px; color: #666;">Password: admin123</p>
         </div>
 
         <!-- Admin Dashboard -->
-        <div id="adminDashboard" class="panel">
-            <h2 class="panel-title">⚡ ADMIN DASHBOARD</h2>
+        <div id="adminPanel" class="panel">
+            <h2 class="title">⚡ ADMIN DASHBOARD</h2>
             
-            <div class="stats-grid">
-                <div class="stat-box">
-                    <div class="stat-number" id="totalUsers">0</div>
-                    <div class="stat-label">VIP Users</div>
+            <div class="stats">
+                <div class="stat">
+                    <h3 id="totalLinks">0</h3>
+                    <p>Total Links</p>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="totalLinks">0</div>
-                    <div class="stat-label">Total Links</div>
+                <div class="stat">
+                    <h3 id="totalFiles">0</h3>
+                    <p>Files</p>
                 </div>
-                <div class="stat-box">
-                    <div class="stat-number" id="totalFiles">0</div>
-                    <div class="stat-label">Files</div>
+                <div class="stat">
+                    <h3 id="totalViews">0</h3>
+                    <p>Total Views</p>
                 </div>
             </div>
 
-            <div class="tab-container">
-                <div class="tab active" onclick="switchTab('create')">➕ CREATE LINK</div>
-                <div class="tab" onclick="switchTab('users')">👥 MANAGE USERS</div>
-                <div class="tab" onclick="switchTab('links')">🔗 MANAGE LINKS</div>
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('create')">➕ CREATE</div>
+                <div class="tab" onclick="showTab('manage')">🔗 MANAGE</div>
             </div>
 
-            <!-- Create Link Section -->
-            <div id="createSection">
+            <!-- Create Tab -->
+            <div id="createTab">
                 <div class="input-group">
-                    <label class="input-label">Title</label>
-                    <input type="text" id="linkTitle" class="input-field" placeholder="Enter title...">
+                    <label>Title</label>
+                    <input type="text" id="title" placeholder="Enter title...">
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Description</label>
-                    <textarea id="linkDesc" class="input-field" rows="4" placeholder="Enter description..."></textarea>
+                    <label>Description</label>
+                    <textarea id="desc" rows="4" placeholder="Enter description..."></textarea>
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Vimeo Video ID</label>
-                    <input type="text" id="vimeoId" class="input-field" placeholder="e.g., 824804225">
+                    <label>Vimeo ID</label>
+                    <input type="text" id="vimeo" placeholder="e.g., 824804225">
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Video Size</label>
-                    <select id="videoSize" class="input-field">
+                    <label>Video Size</label>
+                    <select id="size">
                         <option value="size-youtube">YouTube (16:9)</option>
                         <option value="size-tiktok">TikTok (9:16)</option>
                         <option value="size-instagram">Instagram (1:1)</option>
@@ -613,59 +459,26 @@
                     </select>
                 </div>
                 <div class="input-group">
-                    <label class="input-label">Upload File</label>
-                    <input type="file" id="fileUpload" class="input-field">
+                    <label>Upload File</label>
+                    <input type="file" id="file">
                 </div>
-                <button class="btn btn-primary" onclick="createLink()">CREATE VIP LINK</button>
-                <div id="generatedLink" class="generated-link"></div>
+                <button class="btn btn-primary" onclick="createLink()">CREATE LINK</button>
+                <div id="linkResult" class="link-display"></div>
             </div>
 
-            <!-- Users Section -->
-            <div id="usersSection" style="display: none;">
-                <div class="input-group">
-                    <label class="input-label">Full Name</label>
-                    <input type="text" id="userName" class="input-field" placeholder="Enter name...">
-                </div>
-                <div class="input-group">
-                    <label class="input-label">Gmail Address</label>
-                    <input type="email" id="userEmail" class="input-field" placeholder="Enter Gmail...">
-                </div>
-                <button class="btn btn-primary" onclick="addUser()">ADD VIP USER</button>
-                <div id="usersList" style="margin-top: 20px;"></div>
-            </div>
-
-            <!-- Links Section -->
-            <div id="linksSection" style="display: none;">
+            <!-- Manage Tab -->
+            <div id="manageTab" style="display: none;">
                 <div id="linksList"></div>
             </div>
 
-            <button class="btn btn-danger" onclick="logoutAdmin()" style="margin-top: 20px;">LOGOUT</button>
+            <button class="btn btn-danger" onclick="logout()" style="margin-top: 20px;">LOGOUT</button>
         </div>
 
-        <!-- User Login Panel -->
-        <div id="userLoginPanel" class="panel">
-            <h2 class="panel-title">🔐 VIP MEMBER LOGIN</h2>
-            <div class="input-group">
-                <label class="input-label">Full Name</label>
-                <input type="text" id="loginName" class="input-field" placeholder="Enter your name...">
-            </div>
-            <div class="input-group">
-                <label class="input-label">Gmail Address</label>
-                <input type="email" id="loginEmail" class="input-field" placeholder="Enter your Gmail...">
-            </div>
-            <button class="btn btn-vip" onclick="verifyVIP()">ACCESS VIP CONTENT</button>
-        </div>
-
-        <!-- Content Panel -->
+        <!-- Content Panel (Direct Access) -->
         <div id="contentPanel" class="panel">
-            <div class="loading" id="loading">
-                <div class="spinner"></div>
-                <p>Loading VIP Content...</p>
-            </div>
+            <h2 class="title" id="contentTitle"></h2>
             
-            <h2 class="panel-title" id="contentTitle"></h2>
-            
-            <div class="video-container">
+            <div class="video-box">
                 <iframe id="contentVideo" src="" frameborder="0" allowfullscreen></iframe>
             </div>
 
@@ -674,196 +487,126 @@
             </div>
 
             <button class="btn btn-vip" id="downloadBtn" onclick="downloadFile()">
-                ⬇ DOWNLOAD VIP FILE ⬇
+                ⬇ DOWNLOAD FILE ⬇
             </button>
         </div>
     </div>
 
     <script>
-        // Initialize Database
-        let db = JSON.parse(localStorage.getItem('vipDatabase')) || {
-            users: [],
-            links: {},
-            adminPass: 'admin123'
+        // Database
+        let db = JSON.parse(localStorage.getItem('vipDB')) || {
+            links: {}
         };
 
-        let currentLinkId = null;
-        let editingLinkId = null;
+        let currentLink = null;
+        let editId = null;
 
-        // Check URL for link ID
+        // Check URL
         window.onload = function() {
-            const params = new URLSearchParams(window.location.search);
-            const linkId = params.get('vip');
+            let params = new URLSearchParams(window.location.search);
+            let id = params.get('vip');
             
-            if (linkId && db.links[linkId]) {
-                document.getElementById('adminLoginPanel').classList.remove('active-panel');
-                document.getElementById('userLoginPanel').classList.add('active-panel');
-                currentLinkId = linkId;
+            if (id && db.links[id]) {
+                document.getElementById('adminLogin').classList.remove('active');
+                document.getElementById('contentPanel').classList.add('active');
+                currentLink = id;
+                loadContent();
             }
             
             updateStats();
         };
 
         function saveDB() {
-            localStorage.setItem('vipDatabase', JSON.stringify(db));
+            localStorage.setItem('vipDB', JSON.stringify(db));
             updateStats();
         }
 
         function updateStats() {
-            document.getElementById('totalUsers').textContent = db.users.length;
-            document.getElementById('totalLinks').textContent = Object.keys(db.links).length;
-            
+            let links = Object.keys(db.links).length;
             let files = 0;
+            let views = 0;
+            
             for (let id in db.links) {
                 if (db.links[id].file) files++;
+                views += db.links[id].views || 0;
             }
+            
+            document.getElementById('totalLinks').textContent = links;
             document.getElementById('totalFiles').textContent = files;
+            document.getElementById('totalViews').textContent = views;
         }
 
-        function showAlert(msg, type) {
-            let alert = document.createElement('div');
-            alert.className = `alert alert-${type}`;
-            alert.textContent = msg;
-            document.body.appendChild(alert);
-            
-            setTimeout(() => alert.remove(), 3000);
+        function alert(msg, type) {
+            let a = document.createElement('div');
+            a.className = `alert alert-${type}`;
+            a.textContent = msg;
+            document.body.appendChild(a);
+            setTimeout(() => a.remove(), 3000);
         }
 
-        // Admin Functions
-        function loginAdmin() {
+        // Admin
+        function login() {
             let pass = document.getElementById('adminPass').value;
-            
-            if (pass === db.adminPass) {
-                document.getElementById('adminLoginPanel').classList.remove('active-panel');
-                document.getElementById('adminDashboard').classList.add('active-panel');
-                renderUsers();
+            if (pass === 'admin123') {
+                document.getElementById('adminLogin').classList.remove('active');
+                document.getElementById('adminPanel').classList.add('active');
                 renderLinks();
-                showAlert('Login Successful!', 'success');
+                alert('Welcome Admin!', 'success');
             } else {
-                showAlert('Invalid Password!', 'error');
+                alert('Wrong password!', 'error');
             }
         }
 
-        function logoutAdmin() {
-            document.getElementById('adminDashboard').classList.remove('active-panel');
-            document.getElementById('adminLoginPanel').classList.add('active-panel');
+        function logout() {
+            document.getElementById('adminPanel').classList.remove('active');
+            document.getElementById('adminLogin').classList.add('active');
             document.getElementById('adminPass').value = '';
         }
 
-        function switchTab(tab) {
+        function showTab(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
             event.target.classList.add('active');
             
-            document.getElementById('createSection').style.display = 'none';
-            document.getElementById('usersSection').style.display = 'none';
-            document.getElementById('linksSection').style.display = 'none';
-            
             if (tab === 'create') {
-                document.getElementById('createSection').style.display = 'block';
-            } else if (tab === 'users') {
-                document.getElementById('usersSection').style.display = 'block';
-                renderUsers();
-            } else if (tab === 'links') {
-                document.getElementById('linksSection').style.display = 'block';
+                document.getElementById('createTab').style.display = 'block';
+                document.getElementById('manageTab').style.display = 'none';
+            } else {
+                document.getElementById('createTab').style.display = 'none';
+                document.getElementById('manageTab').style.display = 'block';
                 renderLinks();
             }
         }
 
-        // User Management
-        function addUser() {
-            let name = document.getElementById('userName').value.trim();
-            let email = document.getElementById('userEmail').value.trim().toLowerCase();
-            
-            if (!name || !email) {
-                showAlert('Please fill all fields!', 'error');
-                return;
-            }
-            
-            if (!email.includes('@gmail.com')) {
-                showAlert('Only Gmail addresses allowed!', 'error');
-                return;
-            }
-            
-            if (db.users.find(u => u.email === email)) {
-                showAlert('User already exists!', 'error');
-                return;
-            }
-            
-            db.users.push({ name, email });
-            saveDB();
-            
-            document.getElementById('userName').value = '';
-            document.getElementById('userEmail').value = '';
-            
-            renderUsers();
-            showAlert('VIP User Added!', 'success');
-        }
-
-        function renderUsers() {
-            let html = '';
-            
-            db.users.forEach((user, index) => {
-                html += `
-                    <div class="user-card">
-                        <div class="user-info">
-                            <h4>${user.name}</h4>
-                            <p>${user.email}</p>
-                        </div>
-                        <div class="card-actions">
-                            <button class="card-btn card-btn-danger" onclick="deleteUser(${index})">Remove</button>
-                        </div>
-                    </div>
-                `;
-            });
-            
-            if (db.users.length === 0) {
-                html = '<p style="text-align: center; color: #666;">No VIP users added yet.</p>';
-            }
-            
-            document.getElementById('usersList').innerHTML = html;
-        }
-
-        function deleteUser(index) {
-            if (confirm('Remove this VIP user?')) {
-                db.users.splice(index, 1);
-                saveDB();
-                renderUsers();
-                showAlert('User Removed!', 'success');
-            }
-        }
-
-        // Link Management
+        // Create Link
         function createLink() {
-            let title = document.getElementById('linkTitle').value.trim();
-            let desc = document.getElementById('linkDesc').value.trim();
-            let vimeoId = document.getElementById('vimeoId').value.trim();
-            let videoSize = document.getElementById('videoSize').value;
-            let file = document.getElementById('fileUpload').files[0];
-            
-            if (!title || !vimeoId) {
-                showAlert('Title and Vimeo ID required!', 'error');
+            let title = document.getElementById('title').value.trim();
+            let desc = document.getElementById('desc').value.trim();
+            let vimeo = document.getElementById('vimeo').value.trim();
+            let size = document.getElementById('size').value;
+            let file = document.getElementById('file').files[0];
+
+            if (!title || !vimeo) {
+                alert('Title and Vimeo ID required!', 'error');
                 return;
             }
-            
-            let linkId = editingLinkId || 'VIP_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
-            
+
+            let id = editId || 'VIP_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6);
+
             if (file) {
                 let reader = new FileReader();
                 reader.onload = function(e) {
-                    saveLink(linkId, title, desc, vimeoId, videoSize, e.target.result, file.name);
+                    saveLink(id, title, desc, vimeo, size, e.target.result, file.name);
                 };
                 reader.readAsDataURL(file);
             } else {
-                let oldData = editingLinkId ? db.links[editingLinkId] : null;
-                saveLink(linkId, title, desc, vimeoId, videoSize, 
-                        oldData ? oldData.file : null, 
-                        oldData ? oldData.fileName : null);
+                let old = editId ? db.links[editId] : null;
+                saveLink(id, title, desc, vimeo, size, old ? old.file : null, old ? old.fileName : null);
             }
         }
 
-        function saveLink(id, title, desc, vimeoId, videoSize, file, fileName) {
+        function saveLink(id, title, desc, vimeo, size, file, fileName) {
             db.links[id] = {
-                title, desc, vimeoId, videoSize,
+                title, desc, vimeo, size,
                 file: file,
                 fileName: fileName,
                 created: new Date().toLocaleString(),
@@ -873,19 +616,20 @@
             saveDB();
             
             let url = window.location.href.split('?')[0] + '?vip=' + id;
-            document.getElementById('generatedLink').innerHTML = `
-                <strong>✅ VIP Link Created!</strong><br>
+            document.getElementById('linkResult').innerHTML = `
+                <strong>✅ LINK READY!</strong><br>
                 <a href="${url}" target="_blank">${url}</a>
             `;
             
-            document.getElementById('linkTitle').value = '';
-            document.getElementById('linkDesc').value = '';
-            document.getElementById('vimeoId').value = '';
-            document.getElementById('fileUpload').value = '';
+            // Clear form
+            document.getElementById('title').value = '';
+            document.getElementById('desc').value = '';
+            document.getElementById('vimeo').value = '';
+            document.getElementById('file').value = '';
             
-            editingLinkId = null;
+            editId = null;
             renderLinks();
-            showAlert('Link Created!', 'success');
+            alert('Link created!', 'success');
         }
 
         function renderLinks() {
@@ -896,23 +640,22 @@
                 let url = window.location.href.split('?')[0] + '?vip=' + id;
                 
                 html += `
-                    <div class="link-card">
-                        <div class="link-info">
+                    <div class="card">
+                        <div style="flex:1">
                             <h4>${link.title}</h4>
-                            <p style="color: #aaa;">${link.desc.substring(0, 50)}...</p>
-                            <div class="link-url">${url}</div>
-                            <small style="color: #666;">Views: ${link.views || 0}</small>
+                            <small>Views: ${link.views || 0}</small><br>
+                            <small style="color:#666">${url}</small>
                         </div>
                         <div class="card-actions">
                             <button class="card-btn" onclick="editLink('${id}')">Edit</button>
-                            <button class="card-btn card-btn-danger" onclick="deleteLink('${id}')">Delete</button>
+                            <button class="card-btn" onclick="deleteLink('${id}')" style="border-color:#ff4444">Delete</button>
                         </div>
                     </div>
                 `;
             }
             
             if (Object.keys(db.links).length === 0) {
-                html = '<p style="text-align: center; color: #666;">No links created yet.</p>';
+                html = '<p style="text-align:center; color:#666">No links yet</p>';
             }
             
             document.getElementById('linksList').innerHTML = html;
@@ -921,15 +664,14 @@
         function editLink(id) {
             let link = db.links[id];
             
-            document.getElementById('linkTitle').value = link.title;
-            document.getElementById('linkDesc').value = link.desc;
-            document.getElementById('vimeoId').value = link.vimeoId;
-            document.getElementById('videoSize').value = link.videoSize;
+            document.getElementById('title').value = link.title;
+            document.getElementById('desc').value = link.desc;
+            document.getElementById('vimeo').value = link.vimeo;
+            document.getElementById('size').value = link.size;
             
-            editingLinkId = id;
-            switchTab('create');
-            
-            showAlert('Editing: ' + link.title, 'success');
+            editId = id;
+            showTab('create');
+            alert('Editing: ' + link.title, 'success');
         }
 
         function deleteLink(id) {
@@ -937,67 +679,38 @@
                 delete db.links[id];
                 saveDB();
                 renderLinks();
-                showAlert('Link Deleted!', 'success');
+                alert('Link deleted!', 'success');
             }
         }
 
-        // VIP User Functions
-        function verifyVIP() {
-            let name = document.getElementById('loginName').value.trim().toLowerCase();
-            let email = document.getElementById('loginEmail').value.trim().toLowerCase();
-            
-            if (!name || !email) {
-                showAlert('Please enter name and Gmail!', 'error');
-                return;
-            }
-            
-            let user = db.users.find(u => 
-                u.name.toLowerCase() === name && 
-                u.email.toLowerCase() === email
-            );
-            
-            if (user) {
-                loadVIPContent();
-            } else {
-                showAlert('Access Denied! Not a VIP member.', 'error');
-            }
-        }
-
-        function loadVIPContent() {
-            let link = db.links[currentLinkId];
-            
-            if (!link) {
-                showAlert('Link not found!', 'error');
-                return;
-            }
-            
-            link.views = (link.views || 0) + 1;
-            saveDB();
-            
-            document.getElementById('userLoginPanel').classList.remove('active-panel');
-            document.getElementById('contentPanel').classList.add('active-panel');
+        // Content Functions
+        function loadContent() {
+            let link = db.links[currentLink];
             
             document.getElementById('contentTitle').textContent = link.title;
             document.getElementById('contentDesc').textContent = link.desc;
             
             let iframe = document.getElementById('contentVideo');
-            iframe.src = `https://player.vimeo.com/video/${link.vimeoId}`;
-            iframe.className = link.videoSize;
+            iframe.src = `https://player.vimeo.com/video/${link.vimeo}`;
+            iframe.className = link.size;
+            
+            link.views = (link.views || 0) + 1;
+            saveDB();
         }
 
         function downloadFile() {
-            let link = db.links[currentLinkId];
+            let link = db.links[currentLink];
             
             if (link && link.file) {
                 let a = document.createElement('a');
                 a.href = link.file;
-                a.download = link.fileName || 'vip_file';
+                a.download = link.fileName || 'download';
                 document.body.appendChild(a);
                 a.click();
                 document.body.removeChild(a);
-                showAlert('Download Started!', 'success');
+                alert('Download started!', 'success');
             } else {
-                showAlert('No file available!', 'error');
+                alert('No file available!', 'error');
             }
         }
     </script>
