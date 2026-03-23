@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>PREMIUM VIP • LINK WISE SECURITY 2.0 | Permanent Data Fortress</title>
+    <title>PREMIUM VIP • LINK WISE SECURITY 3.0 | Smart Video System</title>
     <style>
         * {
             margin: 0;
@@ -26,13 +26,11 @@
             --info: #3b82f6;
             --dark: #03030a;
             --darker: #010105;
-            --card-bg: rgba(8, 8, 18, 0.95);
             --glass: rgba(5, 5, 15, 0.98);
             --glass-light: rgba(15, 15, 30, 0.9);
             --neon-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
             --vip-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
             --free-shadow: 0 0 20px rgba(46, 204, 113, 0.5);
-            --border-glow: 0 0 10px rgba(0, 255, 255, 0.2);
         }
 
         body {
@@ -43,7 +41,7 @@
             overflow-x: hidden;
         }
 
-        /* Advanced Cyberpunk Background */
+        /* Cyber Background */
         .cyber-universe {
             position: fixed;
             top: 0;
@@ -76,14 +74,6 @@
             0% { transform: perspective(600px) rotateX(8deg) translateY(0); }
             100% { transform: perspective(600px) rotateX(8deg) translateY(40px); }
         }
-        .particles {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(0,255,255,0.02) 100%);
-            animation: pulseGlow 4s ease-in-out infinite;
-        }
-        @keyframes pulseGlow { 0%,100%{ opacity:0.3; } 50%{ opacity:0.7; } }
         .scan-lines {
             position: absolute;
             width: 100%;
@@ -305,8 +295,17 @@
         .mode-option { flex: 1; text-align: center; padding: 14px; border-radius: 40px; cursor: pointer; transition: 0.2s; background: rgba(0,0,0,0.4); font-weight: 600; }
         .mode-option.active-mode { background: linear-gradient(135deg, var(--primary), #0099ff); color: #000; box-shadow: 0 0 25px var(--primary); }
 
-        /* Video */
-        .video-premium { margin: 35px 0; background: #000; border-radius: 35px; overflow: hidden; border: 2px solid var(--primary); box-shadow: 0 0 45px rgba(0,255,255,0.3); }
+        /* Video Container - HIDDEN when no video ID */
+        .video-premium {
+            margin: 35px 0;
+            background: #000;
+            border-radius: 35px;
+            overflow: hidden;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 45px rgba(0,255,255,0.3);
+            display: none;
+        }
+        .video-premium.active-video { display: block; }
         .video-premium iframe { width: 100%; height: 100%; display: block; }
         .size-youtube { aspect-ratio: 16/9; }
         .size-tiktok { aspect-ratio: 9/16; max-width: 380px; margin: 0 auto; }
@@ -346,10 +345,17 @@
         .alert-error { border-color: var(--danger); }
         .alert-info { border-color: var(--info); }
 
-        /* Loading */
-        .loader-premium { display: none; text-align: center; padding: 60px; }
-        .cyber-spinner { width: 70px; height: 70px; border: 5px solid rgba(0,255,255,0.15); border-top-color: var(--primary); border-right-color: var(--secondary); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px; }
-        @keyframes spin { to { transform: rotate(360deg); } }
+        /* Content Box - Clean without extra images */
+        .content-description-box {
+            background: rgba(0,0,0,0.6);
+            border-radius: 35px;
+            padding: 35px;
+            margin: 25px 0;
+        }
+        .content-description-box p, .content-description-box div {
+            color: #ddd;
+            line-height: 1.9;
+        }
 
         @media (max-width: 768px) {
             .container { padding: 12px; }
@@ -360,13 +366,13 @@
     </style>
 </head>
 <body>
-<div class="cyber-universe"><div class="gradient-layer"></div><div class="grid-3d"></div><div class="particles"></div><div class="scan-lines"></div></div>
+<div class="cyber-universe"><div class="gradient-layer"></div><div class="grid-3d"></div><div class="scan-lines"></div></div>
 <div class="container">
     <div class="vip-header">
         <div class="header-rainbow"></div>
-        <div class="vip-badge">★ PREMIUM VIP SYSTEM 2.0 ★</div>
+        <div class="vip-badge">★ PREMIUM VIP SYSTEM 3.0 ★</div>
         <h1>LINK WISE SECURITY</h1>
-        <p style="color: #bbb; font-size: 1.2em;">Permanent Data Protection • Smart Backup • VIP/Free Dual Mode • Zero Auto-Deletion</p>
+        <p style="color: #bbb; font-size: 1.2em;">Smart Video System • Optional Vimeo Integration • VIP/Free Dual Mode</p>
         <div class="header-stats">
             <div class="header-stat" id="headerLinks">🔗 Links: 0</div>
             <div class="header-stat" id="headerPasswords">🔑 Passwords: 0</div>
@@ -399,17 +405,17 @@
             <div class="tab" onclick="switchAdminTab('stats')">📊 ANALYTICS</div>
         </div>
 
-        <!-- Create Link Tab -->
+        <!-- Create Link Tab - Vimeo ID is OPTIONAL -->
         <div id="adminCreateTab">
             <div class="access-mode-switch" id="accessModeSelector">
                 <div class="mode-option active-mode" data-mode="vip">👑 VIP MODE (Password Required)</div>
                 <div class="mode-option" data-mode="free">🌐 FREE MODE (Open Access)</div>
             </div>
             <input type="hidden" id="linkAccessMode" value="vip">
-            <div class="input-group"><label class="input-label">📌 Link Title</label><input type="text" id="linkTitle" class="input-field" placeholder="e.g., Exclusive 4K Movie"></div>
-            <div class="input-group"><label class="input-label">📝 Description (line break supported)</label><textarea id="linkDesc" class="input-field" rows="5" placeholder="Write detailed info..."></textarea></div>
-            <div class="input-group"><label class="input-label">🎥 Vimeo Video ID</label><input type="text" id="vimeoId" class="input-field" placeholder="e.g., 824804225"></div>
-            <div class="input-group"><label class="input-label">📱 Video Size (Responsive)</label><select id="videoSize" class="input-field"><option value="size-youtube">16:9 (YouTube)</option><option value="size-tiktok">9:16 (TikTok)</option><option value="size-instagram">1:1 (Instagram)</option><option value="size-facebook">4:3 (Facebook)</option></select></div>
+            <div class="input-group"><label class="input-label">📌 Link Title</label><input type="text" id="linkTitle" class="input-field" placeholder="e.g., Exclusive Content 2024"></div>
+            <div class="input-group"><label class="input-label">📝 Description (line break supported)</label><textarea id="linkDesc" class="input-field" rows="5" placeholder="Write detailed description..."></textarea></div>
+            <div class="input-group"><label class="input-label">🎥 Vimeo Video ID <span style="color: var(--warning);">(Optional - Leave empty for no video)</span></label><input type="text" id="vimeoId" class="input-field" placeholder="e.g., 824804225 (leave blank for no video)"></div>
+            <div class="input-group" id="videoSizeGroup" style="display: none;"><label class="input-label">📱 Video Size (Responsive)</label><select id="videoSize" class="input-field"><option value="size-youtube">16:9 (YouTube Style)</option><option value="size-tiktok">9:16 (TikTok Style)</option><option value="size-instagram">1:1 (Instagram Style)</option><option value="size-facebook">4:3 (Facebook Style)</option></select></div>
             <div class="input-group"><label class="input-label">📂 Upload File (No size limit, permanent)</label><input type="file" id="fileUpload" class="input-field"></div>
             <button class="btn btn-primary" onclick="createLink()">✨ CREATE SECURE LINK</button>
             <div id="generatedLink" class="generated-box" style="margin-top:25px; padding:18px; background:rgba(0,255,255,0.1); border-radius:30px; text-align:center; display:none;"></div>
@@ -423,25 +429,21 @@
             <div style="margin-top: 35px;"><h3 style="color: var(--primary);">🗂️ Existing Passwords</h3><div id="passwordsList"></div></div>
         </div>
 
-        <!-- Manage Links Tab (permanent) -->
+        <!-- Manage Links Tab -->
         <div id="adminLinksTab" style="display: none;"><div id="linksList"></div></div>
 
-        <!-- Backup & Restore Tab -->
+        <!-- Backup Tab -->
         <div id="adminBackupTab" style="display: none;">
             <div class="backup-card">
                 <h3 style="color: var(--info); margin-bottom: 20px;">💾 PERMANENT BACKUP SYSTEM</h3>
-                <p style="margin-bottom: 20px;">Export full database (all links, passwords, file metadata) or restore from backup. Data never auto-deletes, fully controlled by you.</p>
+                <p style="margin-bottom: 20px;">Export full database or restore from backup. Data never auto-deletes.</p>
                 <div class="backup-actions">
-                    <button class="btn btn-primary" onclick="exportBackup()" style="width: auto;">📤 EXPORT FULL BACKUP</button>
-                    <button class="btn btn-warning" onclick="importBackupPrompt()" style="width: auto;">📥 RESTORE FROM BACKUP</button>
-                    <button class="btn btn-success" onclick="resetStatsOnly()" style="width: auto;">🔄 RESET VIEWS (Keep Links)</button>
+                    <button class="btn btn-primary" onclick="exportBackup()" style="width: auto;">📤 EXPORT BACKUP</button>
+                    <button class="btn btn-warning" onclick="importBackupPrompt()" style="width: auto;">📥 RESTORE BACKUP</button>
+                    <button class="btn btn-success" onclick="resetStatsOnly()" style="width: auto;">🔄 RESET VIEWS</button>
                 </div>
                 <input type="file" id="backupFileInput" style="display: none;" accept=".json" onchange="restoreBackup(this)">
                 <div id="backupStatus" style="margin-top: 20px; padding: 12px; border-radius: 20px; background: rgba(0,0,0,0.4);"></div>
-            </div>
-            <div class="backup-card">
-                <h3 style="color: var(--vip);">📋 Data Integrity Guarantee</h3>
-                <p>✅ All links are permanently saved unless you manually delete them.<br>✅ Passwords and file metadata never auto-clear.<br>✅ Full system export/import supported.</p>
             </div>
         </div>
 
@@ -453,29 +455,44 @@
     <!-- User Access Panel -->
     <div id="userAccessPanel" class="panel"><div id="dynamicAccessContent"></div></div>
 
-    <!-- Content Panel -->
+    <!-- Content Panel - Clean, no extra images/boxes -->
     <div id="contentPanel" class="panel">
         <div class="loader-premium" id="loadingSpinner"><div class="cyber-spinner"></div><p>Loading secure vault...</p></div>
         <h2 class="panel-title" id="contentTitle"></h2>
-        <div class="video-premium"><iframe id="contentVideo" src="" allowfullscreen></iframe></div>
-        <div style="background: rgba(0,0,0,0.6); border-radius: 35px; padding: 35px; margin: 30px 0;"><div id="contentDesc" style="line-height: 1.9; color: #ccc;"></div></div>
+        <div id="videoContainer" class="video-premium"><iframe id="contentVideo" src="" allowfullscreen></iframe></div>
+        <div class="content-description-box"><div id="contentDesc" style="line-height: 1.9; color: #ddd;"></div></div>
         <button class="btn btn-vip" id="downloadBtn" onclick="downloadFile()">⬇️ DOWNLOAD VIP FILE ⬇️</button>
     </div>
 </div>
 
 <script>
-    // PERMANENT DATABASE - Never auto-delete any data
-    let db = JSON.parse(localStorage.getItem('premiumV2_PERMANENT')) || {
+    // PERMANENT DATABASE
+    let db = JSON.parse(localStorage.getItem('premiumV3_PERMANENT')) || {
         links: {},
         adminPass: 'MH562100607',
-        version: '2.0',
-        createdAt: new Date().toISOString()
+        version: '3.0'
     };
     let currentLinkId = null, editingLinkId = null;
 
-    window.onload = function() { initModeSelector(); checkURL(); updateAllStats(); };
+    window.onload = function() { 
+        initModeSelector();
+        initVimeoListener();
+        checkURL(); 
+        updateAllStats(); 
+    };
 
-    function saveDB() { localStorage.setItem('premiumV2_PERMANENT', JSON.stringify(db)); updateAllStats(); showBackupStatusMsg('Data saved permanently', 'info'); }
+    function initVimeoListener() {
+        let vimeoInput = document.getElementById('vimeoId');
+        let sizeGroup = document.getElementById('videoSizeGroup');
+        if(vimeoInput) {
+            vimeoInput.addEventListener('input', function() {
+                if(sizeGroup) sizeGroup.style.display = this.value.trim() ? 'block' : 'none';
+            });
+            if(sizeGroup) sizeGroup.style.display = vimeoInput.value.trim() ? 'block' : 'none';
+        }
+    }
+
+    function saveDB() { localStorage.setItem('premiumV3_PERMANENT', JSON.stringify(db)); updateAllStats(); }
 
     function updateAllStats() {
         let totalLinks = Object.keys(db.links).length;
@@ -493,14 +510,12 @@
         document.getElementById('headerLinks').textContent = `🔗 Links: ${totalLinks}`;
         document.getElementById('headerPasswords').textContent = `🔑 Passwords: ${totalPasswords}`;
         document.getElementById('headerViews').textContent = `👁️ Views: ${totalViews}`;
-        document.getElementById('headerBackup').innerHTML = `💾 Backup: ${localStorage.getItem('premiumV2_PERMANENT') ? 'Active' : 'Ready'}`;
         updateLinkSelect(); renderDetailedStats();
         if(document.getElementById('linksList')) renderLinks();
         if(document.getElementById('passwordsList')) renderPasswords();
     }
 
     function showAlert(msg, type) { let a = document.createElement('div'); a.className = `alert-modern alert-${type}`; a.innerHTML = msg; document.body.appendChild(a); setTimeout(() => a.remove(), 3200); }
-    function showBackupStatusMsg(msg, type) { let el = document.getElementById('backupStatus'); if(el) { el.innerHTML = `<span style="color:${type==='success'?'#00ff88':'#ffaa00'}">${msg}</span>`; setTimeout(()=>{if(el) el.innerHTML='';},3000); } }
 
     function initModeSelector() {
         let modes = document.querySelectorAll('.mode-option');
@@ -522,23 +537,48 @@
         let link = db.links[currentLinkId];
         let container = document.getElementById('dynamicAccessContent');
         if(link.accessMode === 'free') {
-            container.innerHTML = `<div class="free-access-box" style="background:rgba(46,204,113,0.1); border-radius:45px; padding:45px; text-align:center; border:2px solid var(--free);"><h2 style="color:var(--free);">🌐 FREE ACCESS</h2><p style="margin:25px 0;">No password required. Click to view content.</p><button class="btn btn-free" onclick="grantFreeAccess()">🚀 ENTER NOW</button></div>`;
+            container.innerHTML = `<div style="background:rgba(46,204,113,0.1); border-radius:45px; padding:45px; text-align:center; border:2px solid var(--free);"><h2 style="color:var(--free);">🌐 FREE ACCESS</h2><p style="margin:25px 0;">No password required. Click to view content.</p><button class="btn btn-free" onclick="grantFreeAccess()">🚀 ENTER NOW</button></div>`;
         } else {
-            container.innerHTML = `<div class="password-access-box" style="background:rgba(0,0,0,0.7); border-radius:45px; padding:45px; border:2px solid var(--vip);"><h2 style="color:var(--vip);">🔒 VIP GATEWAY</h2><div class="input-group"><input type="password" id="vipUserPassword" class="input-field" placeholder="Enter VIP password..."></div><button class="btn btn-vip" onclick="verifyLinkPassword()">🔓 UNLOCK PREMIUM</button></div>`;
+            container.innerHTML = `<div style="background:rgba(0,0,0,0.7); border-radius:45px; padding:45px; border:2px solid var(--vip);"><h2 style="color:var(--vip);">🔒 VIP GATEWAY</h2><div class="input-group"><input type="password" id="vipUserPassword" class="input-field" placeholder="Enter VIP password..."></div><button class="btn btn-vip" onclick="verifyLinkPassword()">🔓 UNLOCK PREMIUM</button></div>`;
         }
     }
 
     function grantFreeAccess() { let link = db.links[currentLinkId]; if(link && link.accessMode==='free') { document.getElementById('userAccessPanel').classList.remove('active-panel'); document.getElementById('contentPanel').classList.add('active-panel'); loadLinkContent(); } else showAlert('Access denied','error'); }
     function verifyLinkPassword() { let pass = document.getElementById('vipUserPassword')?.value; let link = db.links[currentLinkId]; if(link && (link.passwords||[]).includes(pass)) { document.getElementById('userAccessPanel').classList.remove('active-panel'); document.getElementById('contentPanel').classList.add('active-panel'); loadLinkContent(); } else showAlert('Invalid VIP password!','error'); }
-    function loadLinkContent() { let link = db.links[currentLinkId]; if(!link) return; document.getElementById('contentTitle').textContent = link.title; document.getElementById('contentDesc').innerHTML = link.formattedDesc || link.desc.replace(/\n/g,'<br>'); let iframe = document.getElementById('contentVideo'); iframe.src = `https://player.vimeo.com/video/${link.vimeo}`; iframe.className = link.size; link.views = (link.views||0)+1; link.lastAccess = new Date().toLocaleString(); saveDB(); }
+    
+    function loadLinkContent() {
+        let link = db.links[currentLinkId];
+        if(!link) return;
+        document.getElementById('contentTitle').textContent = link.title;
+        document.getElementById('contentDesc').innerHTML = link.formattedDesc || link.desc.replace(/\n/g,'<br>');
+        
+        // Handle Video - Show ONLY if Vimeo ID exists
+        let videoContainer = document.getElementById('videoContainer');
+        let iframe = document.getElementById('contentVideo');
+        
+        if(link.vimeo && link.vimeo.trim() !== '') {
+            iframe.src = `https://player.vimeo.com/video/${link.vimeo}`;
+            iframe.className = link.size || 'size-youtube';
+            videoContainer.classList.add('active-video');
+        } else {
+            iframe.src = '';
+            videoContainer.classList.remove('active-video');
+        }
+        
+        link.views = (link.views||0)+1;
+        link.lastAccess = new Date().toLocaleString();
+        saveDB();
+    }
+    
     function downloadFile() { let link = db.links[currentLinkId]; if(link?.file) { let a=document.createElement('a'); a.href=link.file; a.download=link.fileName||'premium-file'; document.body.appendChild(a); a.click(); document.body.removeChild(a); showAlert('Download started','success'); } else showAlert('No file attached','error'); }
 
-    // Admin
+    // Admin Functions
     function adminLogin() { if(document.getElementById('adminPassword').value === db.adminPass) { document.getElementById('adminLoginPanel').classList.remove('active-panel'); document.getElementById('adminDashboard').classList.add('active-panel'); renderLinks(); updateLinkSelect(); renderPasswords(); showAlert('Welcome Administrator','success'); } else showAlert('Invalid password','error'); }
     function logoutAdmin() { document.getElementById('adminDashboard').classList.remove('active-panel'); document.getElementById('adminLoginPanel').classList.add('active-panel'); document.getElementById('adminPassword').value=''; }
     function switchAdminTab(tab) {
         document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active')); event.target.classList.add('active');
-        document.getElementById('adminCreateTab').style.display='none'; document.getElementById('adminPasswordsTab').style.display='none'; document.getElementById('adminLinksTab').style.display='none'; document.getElementById('adminBackupTab').style.display='none'; document.getElementById('adminStatsTab').style.display='none';
+        let tabs = ['create','passwords','links','backup','stats'];
+        tabs.forEach(t=>{ document.getElementById(`admin${t.charAt(0).toUpperCase()+t.slice(1)}Tab`).style.display = 'none'; });
         if(tab==='create') document.getElementById('adminCreateTab').style.display='block';
         else if(tab==='passwords') { document.getElementById('adminPasswordsTab').style.display='block'; updateLinkSelect(); renderPasswords(); }
         else if(tab==='links') { document.getElementById('adminLinksTab').style.display='block'; renderLinks(); }
@@ -547,48 +587,70 @@
     }
 
     function createLink() {
-        let title = document.getElementById('linkTitle').value.trim(), desc = document.getElementById('linkDesc').value.trim(), vimeo = document.getElementById('vimeoId').value.trim(), size = document.getElementById('videoSize').value, file = document.getElementById('fileUpload').files[0], accessMode = document.getElementById('linkAccessMode').value;
-        if(!title || !vimeo) { showAlert('Title and Vimeo ID required','error'); return; }
+        let title = document.getElementById('linkTitle').value.trim();
+        let desc = document.getElementById('linkDesc').value.trim();
+        let vimeo = document.getElementById('vimeoId').value.trim();
+        let size = document.getElementById('videoSize').value;
+        let file = document.getElementById('fileUpload').files[0];
+        let accessMode = document.getElementById('linkAccessMode').value;
+        
+        if(!title) { showAlert('Title is required','error'); return; }
+        
         let linkId = editingLinkId || 'LINK_' + Date.now() + '_' + Math.random().toString(36).substr(2,10);
         let finalize = (fData, fName) => {
             let formattedDesc = desc.replace(/\n/g,'<br>');
             db.links[linkId] = {
-                title, desc, formattedDesc, vimeo, size, accessMode,
-                file: fData || null, fileName: fName || null,
+                title, desc, formattedDesc,
+                vimeo: vimeo || null,
+                size: size,
+                accessMode: accessMode,
+                file: fData || null,
+                fileName: fName || null,
                 passwords: (db.links[linkId]?.passwords) || (accessMode === 'vip' ? [] : null),
-                created: new Date().toLocaleString(), views: 0, lastAccess: null
+                created: new Date().toLocaleString(),
+                views: 0,
+                lastAccess: null
             };
             saveDB();
             let url = window.location.href.split('?')[0] + '?link=' + linkId;
-            let genDiv = document.getElementById('generatedLink'); genDiv.style.display='block';
-            genDiv.innerHTML = `<strong style="color:var(--success);">✅ LINK ${accessMode==='vip'?'VIP':'FREE'} PERMANENTLY CREATED</strong><br><a href="${url}" target="_blank" style="color:var(--primary);">${url}</a><br><small>Data is permanently saved, will never auto-delete</small>`;
-            document.getElementById('linkTitle').value=''; document.getElementById('linkDesc').value=''; document.getElementById('vimeoId').value=''; document.getElementById('fileUpload').value='';
-            editingLinkId=null; renderLinks(); updateLinkSelect(); showAlert(`Link "${title}" created permanently!`,'success');
+            let genDiv = document.getElementById('generatedLink');
+            genDiv.style.display='block';
+            let videoStatus = vimeo ? '🎥 Video Included' : '📝 Text Only (No Video)';
+            genDiv.innerHTML = `<strong style="color:var(--success);">✅ LINK ${accessMode==='vip'?'VIP':'FREE'} CREATED</strong><br><a href="${url}" target="_blank" style="color:var(--primary);">${url}</a><br><small>${videoStatus} | Data permanently saved</small>`;
+            document.getElementById('linkTitle').value='';
+            document.getElementById('linkDesc').value='';
+            document.getElementById('vimeoId').value='';
+            document.getElementById('fileUpload').value='';
+            let sizeGroup = document.getElementById('videoSizeGroup');
+            if(sizeGroup) sizeGroup.style.display = 'none';
+            editingLinkId=null;
+            renderLinks();
+            updateLinkSelect();
+            showAlert(`Link "${title}" created!`,'success');
         };
         if(file) { let reader = new FileReader(); reader.onload = e => finalize(e.target.result, file.name); reader.readAsDataURL(file); }
         else finalize(null,null);
     }
 
-    function renderLinks() { let html=''; for(let id in db.links){ let l=db.links[id]; let url = window.location.href.split('?')[0]+'?link='+id; let modeBadge = l.accessMode==='vip' ? '<span class="access-badge badge-vip">👑 VIP MODE</span>' : '<span class="access-badge badge-free">🌐 FREE MODE</span>'; html+=`<div class="link-card"><div class="link-header"><h3>${escapeHtml(l.title)}</h3>${modeBadge}</div><div class="link-desc">${(l.desc||'').substring(0,120)}...</div><div class="link-meta" style="display:flex;gap:18px;margin:12px 0;"><span>👁️ ${l.views||0} views</span><span>📁 ${l.file?'File':'No file'}</span><span>🕒 ${l.created}</span>${l.accessMode==='vip'?`<span>🔑 ${(l.passwords||[]).length} passes</span>`:''}</div><div class="link-url">${url}</div><div class="link-actions"><button class="link-action-btn" onclick="editLink('${id}')">✏️ Edit</button><button class="link-action-btn" onclick="copyLink('${url}')">📋 Copy</button><button class="link-action-btn" onclick="deleteLinkPermanently('${id}')">🗑️ Delete</button></div></div>`; }
-        document.getElementById('linksList').innerHTML = html || '<p style="text-align:center;">No links yet. Create your first permanent link.</p>';
+    function renderLinks() { let html=''; for(let id in db.links){ let l=db.links[id]; let url = window.location.href.split('?')[0]+'?link='+id; let modeBadge = l.accessMode==='vip' ? '<span class="access-badge badge-vip">👑 VIP MODE</span>' : '<span class="access-badge badge-free">🌐 FREE MODE</span>'; let videoIcon = (l.vimeo && l.vimeo.trim()) ? '🎬 Video' : '📄 No Video'; html+=`<div class="link-card"><div class="link-header"><h3>${escapeHtml(l.title)}</h3>${modeBadge}</div><div class="link-desc">${(l.desc||'').substring(0,100)}...</div><div class="link-meta" style="display:flex;gap:18px;margin:12px 0;"><span>👁️ ${l.views||0} views</span><span>📁 ${l.file?'File':'No file'}</span><span>${videoIcon}</span><span>🕒 ${l.created}</span>${l.accessMode==='vip'?`<span>🔑 ${(l.passwords||[]).length} passes</span>`:''}</div><div class="link-url">${url}</div><div class="link-actions"><button class="link-action-btn" onclick="editLink('${id}')">✏️ Edit</button><button class="link-action-btn" onclick="copyLink('${url}')">📋 Copy</button><button class="link-action-btn" onclick="deleteLinkPermanently('${id}')">🗑️ Delete</button></div></div>`; }
+        document.getElementById('linksList').innerHTML = html || '<p style="text-align:center;">No links yet. Create your first link.</p>';
     }
     function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
-    function editLink(id){ let l=db.links[id]; document.getElementById('linkTitle').value=l.title; document.getElementById('linkDesc').value=l.desc; document.getElementById('vimeoId').value=l.vimeo; document.getElementById('videoSize').value=l.size; let mode=l.accessMode||'vip'; document.getElementById('linkAccessMode').value=mode; let modes=document.querySelectorAll('.mode-option'); modes.forEach(m=>{ if(m.getAttribute('data-mode')===mode) m.classList.add('active-mode'); else m.classList.remove('active-mode'); }); editingLinkId=id; switchAdminTab('create'); showAlert('Editing: '+l.title,'info'); }
-    function deleteLinkPermanently(id){ if(confirm('Permanently delete this link? This action cannot be undone. Data will not auto-delete. Confirm deletion?')){ delete db.links[id]; saveDB(); renderLinks(); updateLinkSelect(); showAlert('Link permanently deleted','success'); } }
+    function editLink(id){ let l=db.links[id]; document.getElementById('linkTitle').value=l.title; document.getElementById('linkDesc').value=l.desc; document.getElementById('vimeoId').value=l.vimeo||''; document.getElementById('videoSize').value=l.size||'size-youtube'; let mode=l.accessMode||'vip'; document.getElementById('linkAccessMode').value=mode; let modes=document.querySelectorAll('.mode-option'); modes.forEach(m=>{ if(m.getAttribute('data-mode')===mode) m.classList.add('active-mode'); else m.classList.remove('active-mode'); }); let sizeGroup = document.getElementById('videoSizeGroup'); if(sizeGroup) sizeGroup.style.display = (l.vimeo && l.vimeo.trim()) ? 'block' : 'none'; editingLinkId=id; switchAdminTab('create'); showAlert('Editing: '+l.title,'info'); }
+    function deleteLinkPermanently(id){ if(confirm('Permanently delete this link? This cannot be undone.')){ delete db.links[id]; saveDB(); renderLinks(); updateLinkSelect(); showAlert('Link permanently deleted','success'); } }
     function copyLink(url){ navigator.clipboard.writeText(url); showAlert('Link copied!','success'); }
 
     function updateLinkSelect(){ let sel=document.getElementById('passwordLinkSelect'); if(sel){ sel.innerHTML='<option value="">-- Select VIP Link --</option>'; for(let id in db.links){ if(db.links[id].accessMode==='vip') sel.innerHTML+=`<option value="${id}">${db.links[id].title} (${(db.links[id].passwords||[]).length} passes)</option>`; } } }
     function addPassword(){ let lid=document.getElementById('passwordLinkSelect').value, np=document.getElementById('newPassword').value.trim(); if(!lid||!np){ showAlert('Select link and enter password','error'); return; } if(!db.links[lid].passwords) db.links[lid].passwords=[]; if(db.links[lid].passwords.includes(np)){ showAlert('Password exists','error'); return; } db.links[lid].passwords.push(np); saveDB(); document.getElementById('newPassword').value=''; renderPasswords(); updateLinkSelect(); showAlert('Password added','success'); }
     function deletePassword(linkId,idx){ if(confirm('Delete this password?')){ db.links[linkId].passwords.splice(idx,1); saveDB(); renderPasswords(); updateLinkSelect(); showAlert('Password deleted','success'); } }
-    function renderPasswords(){ let html=''; for(let id in db.links){ let l=db.links[id]; if(l.accessMode==='vip' && (l.passwords||[]).length){ html+=`<h4 style="color:var(--primary);margin:20px 0 10px;">${escapeHtml(l.title)}</h4>`; l.passwords.forEach((p,i)=>{ html+=`<div class="password-card" style="display:flex;justify-content:space-between;background:rgba(0,0,0,0.5);padding:14px 20px;border-radius:30px;margin-bottom:10px;"><span style="color:var(--vip);">🔑 ${p}</span><button class="link-action-btn" onclick="deletePassword('${id}',${i})">Delete</button></div>`; }); } } document.getElementById('passwordsList').innerHTML = html || '<p>No VIP passwords</p>'; }
+    function renderPasswords(){ let html=''; for(let id in db.links){ let l=db.links[id]; if(l.accessMode==='vip' && (l.passwords||[]).length){ html+=`<h4 style="color:var(--primary);margin:20px 0 10px;">${escapeHtml(l.title)}</h4>`; l.passwords.forEach((p,i)=>{ html+=`<div style="display:flex;justify-content:space-between;background:rgba(0,0,0,0.5);padding:14px 20px;border-radius:30px;margin-bottom:10px;"><span style="color:var(--vip);">🔑 ${p}</span><button class="link-action-btn" onclick="deletePassword('${id}',${i})">Delete</button></div>`; }); } } document.getElementById('passwordsList').innerHTML = html || '<p>No VIP passwords</p>'; }
 
-    function renderDetailedStats(){ let html=''; for(let id in db.links){ let l=db.links[id]; html+=`<div class="link-card" style="margin-bottom:15px;"><h4 style="color:var(--primary);">${escapeHtml(l.title)} (${l.accessMode==='vip'?'VIP':'FREE'})</h4><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;"><div>👁️ Views: ${l.views||0}</div><div>🔑 Passwords: ${(l.passwords||[]).length}</div><div>📁 ${l.file?'Has file':'No file'}</div><div>📅 Created: ${l.created}</div><div>🕒 Last access: ${l.lastAccess||'never'}</div></div></div>`; } document.getElementById('detailedStats').innerHTML = html || '<p>No data available</p>'; }
+    function renderDetailedStats(){ let html=''; for(let id in db.links){ let l=db.links[id]; html+=`<div class="link-card" style="margin-bottom:15px;"><h4 style="color:var(--primary);">${escapeHtml(l.title)} (${l.accessMode==='vip'?'VIP':'FREE'})</h4><div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;"><div>👁️ Views: ${l.views||0}</div><div>🔑 Passwords: ${(l.passwords||[]).length}</div><div>📁 ${l.file?'File':'No file'}</div><div>🎬 ${(l.vimeo&&l.vimeo.trim())?'Video':'No video'}</div><div>📅 Created: ${l.created}</div></div></div>`; } document.getElementById('detailedStats').innerHTML = html || '<p>No data available</p>'; }
 
-    // BACKUP SYSTEM
-    function exportBackup() { let dataStr = JSON.stringify(db, null, 2); let blob = new Blob([dataStr], {type:'application/json'}); let url = URL.createObjectURL(blob); let a = document.createElement('a'); a.href = url; a.download = `linkwise_backup_${new Date().toISOString().slice(0,19)}.json`; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); showAlert('Backup exported successfully!','success'); showBackupStatusMsg('Backup exported','success'); }
+    function exportBackup() { let dataStr = JSON.stringify(db, null, 2); let blob = new Blob([dataStr], {type:'application/json'}); let url = URL.createObjectURL(blob); let a = document.createElement('a'); a.href = url; a.download = `linkwise_backup_${new Date().toISOString().slice(0,19)}.json`; a.click(); URL.revokeObjectURL(url); showAlert('Backup exported!','success'); }
     function importBackupPrompt() { document.getElementById('backupFileInput').click(); }
-    function restoreBackup(input) { if(!input.files.length) return; let file = input.files[0]; let reader = new FileReader(); reader.onload = function(e) { try { let imported = JSON.parse(e.target.result); if(imported.links !== undefined && imported.adminPass) { db = imported; saveDB(); renderLinks(); updateLinkSelect(); renderPasswords(); showAlert('Database restored successfully! All links permanently saved.','success'); showBackupStatusMsg('Restore complete, data updated','success'); location.reload(); } else throw new Error('Invalid backup file'); } catch(err){ showAlert('Backup file corrupted or invalid','error'); } }; reader.readAsText(file); input.value=''; }
-    function resetStatsOnly() { if(confirm('Reset view statistics for all links? Links and passwords will remain intact.')){ for(let id in db.links) db.links[id].views = 0; saveDB(); showAlert('View statistics have been reset','success'); renderDetailedStats(); } }
+    function restoreBackup(input) { if(!input.files.length) return; let file = input.files[0]; let reader = new FileReader(); reader.onload = function(e) { try { let imported = JSON.parse(e.target.result); if(imported.links !== undefined && imported.adminPass) { db = imported; saveDB(); renderLinks(); updateLinkSelect(); renderPasswords(); showAlert('Database restored!','success'); location.reload(); } else throw new Error('Invalid'); } catch(err){ showAlert('Backup file corrupted','error'); } }; reader.readAsText(file); input.value=''; }
+    function resetStatsOnly() { if(confirm('Reset view counts? Links and passwords remain.')){ for(let id in db.links) db.links[id].views = 0; saveDB(); showAlert('Statistics reset','success'); renderDetailedStats(); } }
 </script>
 </body>
 </html>
